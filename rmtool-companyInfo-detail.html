@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCM Tool Kit - 首頁</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/main.css?v=BggizeEmffVW1aO9F9cEkQ5X2MnQUe38xWPVWomZDKo">
+    <link rel="stylesheet" href="./css/bta.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/pnrtool.css">
+    <link rel="stylesheet" href="./css/pnrtool_dark.css">
+    <link rel="stylesheet" href="./css/loadingModal.css?v=qfzycXcwBGKyowZpxEwHGJcUPyw_f0szXZpiW5I-8mk">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Roboto&amp;display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid no_padding h-100">
+            <nav class="nav_block h-100">
+                <div class="block_top">
+                    <div class="h3"><a href="./index.html" style="color: #fff;">FCM Tool Kit</a></div>
+                    <a class="icon_item icon_md icon_logout"  href="./login.html"></a>
+                </div>
+                <div class="block_content">
+                    <ul class="nav nav-tabs tab_style1" role="tablist">
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./amex.html">BTA (TXT格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./bta.html">BTA (XLSX格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./urgentnotify.html">緊急通知 BTA 交易</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./cta.html">CTA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./billingstatement.html">請款</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerfoot">
+                    <button id="theme-toggle" class="mb-3"><i class="bi bi-brightness-high-fill"></i></button>
+                    <a href="./rmtool.html"><span>RM Tools</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!--電燈開關-->
+    <script>
+    (function() {
+        const toggleBtn   = document.getElementById('theme-toggle');
+        const rootEl      = document.documentElement;
+        const storageKey  = 'theme-preference';
+
+        // 1. 初始化：读取 localStorage 或默认 data-theme
+        const currentTheme = localStorage.getItem(storageKey)
+                                || rootEl.getAttribute('data-theme')
+                                || 'light';
+        rootEl.setAttribute('data-theme', currentTheme);
+
+        // 2. 点击切换：只切换 data-theme 并写回 localStorage
+        toggleBtn.addEventListener('click', () => {
+            const newTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            rootEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem(storageKey, newTheme);
+        });
+    })();
+    </script>
+
+    <div class="content">
+        <div class="container-fluid no_padding">
+            <div class="info_block right_area_block">
+                <!--top-->
+                <div class="d-flex align-items-center justify-content-between my-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center RMtool_Title">
+                            <div class="m-2"><a href="./rmtool.html" style="font-weight: bold;font-size: 27px;white-space: nowrap;">Advance RM Tool</a></div>
+                            <div style="color: #7e7e7e;font-size: 24px;white-space: nowrap;">/</div>
+                            <div class="m-2"><a href="./rmtool-companyInfo.html" style="font-weight: bold;font-size: 27px;white-space: nowrap;">公司管理</a></div>
+                        </div>
+                        <div class="d-flex align-items-center"> </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-gray mx-2 px-2" style="width: 68px;height: 45px;" onclick="location.href='./rmtool-companyInfo.html'">
+                          <i class="bi bi-arrow-return-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="tooltip" class="tooltip"></div>
+                <!--主體-->
+                <div class="d-flex align-items-center col mx-2 my-3 RMtool_Title">
+                    <div style="font-size: 21px;white-space: nowrap;font-weight: normal;">公司: 安聯證券</div>
+                    <div class="mx-2" style="color: #7e7e7e;font-size: 21px;white-space: nowrap;">/</div>
+                    <div style="font-size: 21px;white-space: nowrap;font-weight: normal">AIAN: Allianz</div>
+                </div>
+                <div class="row">
+                <!--Center container-->
+                <nav class="col-auto">
+                <div class="nav container--bk detel-nav" id="nav-tab" role="tablist">
+                    <button class="nav-link rounded-3 active" id="nav-break-tab" data-bs-toggle="tab" data-bs-target="#nav-break" type="button" role="tab" aria-controls="nav-break" aria-selected="true">Break</button>
+                    <button class="nav-link rounded-3" id="nav-udid-tab" data-bs-toggle="tab" data-bs-target="#nav-udid" type="button" role="tab" aria-controls="nav-udid" aria-selected="false" tabindex="-1">UDID</button>
+                    <button class="nav-link rounded-3" id="nav-air-tab" data-bs-toggle="tab" data-bs-target="#nav-air" type="button" role="tab" aria-controls="nav-air" aria-selected="false" tabindex="-1">AIR</button>
+                    <button class="nav-link rounded-3" id="nav-hotel-tab" data-bs-toggle="tab" data-bs-target="#nav-hotel" type="button" role="tab" aria-controls="nav-hotel" aria-selected="false" tabindex="-1">HOTEL</button>
+                    <button class="nav-link rounded-3" id="nav-car-tab" data-bs-toggle="tab" data-bs-target="#nav-car" type="button" role="tab" aria-controls="nav-car" aria-selected="false" tabindex="-1">CAR</button>
+                </div>
+                </nav>
+                <div class="col px-0 tab-content h-100">
+                    <!--block-break-->
+                    <section class="tab-pane fade show active h-100 pe-2" id="nav-break" role="tabpanel" aria-labelledby="nav-break-tab">
+                        <div class="container--bk d-flex justify-content-between p-3 mb-2 rounded-3">
+                        <div class=" d-flex align-items-center">
+                            <p class="fw-bold me-2" style="font-size:18px;white-space: nowrap;">Breaks Format</p>
+                        </div>
+                        <div class="col-auto d-flex align-items-center">
+                            <button class="btn btn-primary shadow-none ms-2">確認</button>
+                            <button class="btn btn-dark shadow-none ms-2">重設</button>
+                        </div>
+                        </div>
+
+                        <div class="container--bk p-3 mb-2 rounded-3">
+                        <div class="row mx-0">
+                            <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                            <span class="col-auto me-2">Breaks Format1</span>
+                            <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+                            </div>
+                            <div class="col ps-0 pe-3 d-flex align-items-center">
+                            <span class="col-auto me-2">Description</span>
+                            <span class="col"><input type="text" class="input-BKstyle"></span>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="container--bk p-3 mb-2 rounded-3">
+                        <div class="row mx-0">
+                            <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                            <span class="col-auto me-2">Breaks Format2</span>
+                            <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+                            </div>
+                            <div class="col ps-0 pe-3 d-flex align-items-center">
+                            <span class="col-auto me-2">Description</span>
+                            <span class="col"><input type="text" class="input-BKstyle"></span>
+                            </div>
+                        </div>
+                        </div>
+
+                    </section>
+                    <!--block-UDID-->
+                    <section class="tab-pane fade h-100 pe-2" id="nav-udid" role="tabpanel" aria-labelledby="nav-break-udid">
+                        <div class="container--bk d-flex justify-content-between p-3 mb-2 rounded-3">
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold me-2" style="font-size: 18px;white-space: nowrap;">UDIDs Format </p>
+                                <p style="color:#888888;">(勾選代表執行﹝UDID 資料補齊﹞功能時，CSV 報表必定會有該 UDID 資料)</p>
+                            </div>
+
+                            <div class="col-auto d-flex align-items-center">
+                                <button class="btn btn-primary shadow-none ms-2">確認</button>
+                                <button class="btn btn-dark shadow-none ms-2">重設</button>
+                            </div>
+                        </div>
+                        <!----1---->
+                        <div class="container--bk p-3 mb-2 rounded-3">
+                            <div class="row mx-0">
+                                <div class="col-auto d-flex align-items-center ps-0 pe-3">
+                                <input class="checkbox-s1" type="checkbox" id="UDID-item1">
+                                <label class="checkbox-s1-label m-0" for="UDID-item1"></label>
+                                </div>
+                                <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                                UDID1
+                                </div>
+                                <div class="col-auto ps-0 pe-4 d-flex align-items-center">
+                                <input type="checkbox" class="btn-check btn-YellowToggle" data-udid-toggle="1" id="UDIDs-toggle-1">
+                                <label class="btn btn-YellowToggle-lable" for="UDIDs-toggle-1">自定選項</label>
+                                <button type="button" class="btn btn-addyellow ms-2" data-udid-addbtn="1"><i class="bi bi-plus" style="line-height: 1rem;letter-spacing: 0;"></i></button>
+                                </div>
+                                <div class="col px-0 d-flex align-items-center">
+                                <span class="col-auto me-2">Description</span>
+                                <span class="col"><input type="text" class="input-BKstyle"></span>
+                                </div>
+                            </div>
+                            <div class="udid-content" data-udid-opcontent="1">
+                                <div class="row">
+                                <div class="col-lg-4 col-6 px-3 mt-3 d-flex align-items-center udids-bk">
+                                    <span class="col-auto me-2">option</span>
+                                    <span class="col me-2"><input type="text" class="input-BKstyle"></span>
+                                    <span class="col-auto"><button class="btn-delete udids-option"><i class="bi bi-trash"></i></button></span>
+                                </div>
+                                </div>       
+                            </div>
+                        </div>
+                        <!----2---->
+                        <div class="container--bk p-3 mb-2 rounded-3">
+                            <div class="row mx-0">
+                                <div class="col-auto d-flex align-items-center ps-0 pe-3">
+                                <input class="checkbox-s1" type="checkbox" id="UDID-item2">
+                                <label class="checkbox-s1-label m-0" for="UDID-item2"></label>
+                                </div>
+                                <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                                UDID2
+                                </div>
+                                <div class="col-auto ps-0 pe-4 d-flex align-items-center">
+                                <input type="checkbox" class="btn-check btn-YellowToggle" data-udid-toggle="2" id="UDIDs-toggle-2">
+                                <label class="btn btn-YellowToggle-lable" for="UDIDs-toggle-2">自定選項</label>
+                                <button type="button" class="btn btn-addyellow ms-2" data-udid-addbtn="2"><i class="bi bi-plus" style="line-height: 1rem;letter-spacing: 0;"></i></button>
+                                </div>
+                                <div class="col px-0 d-flex align-items-center">
+                                <span class="col-auto me-2">Description</span>
+                                <span class="col"><input type="text" class="input-BKstyle"></span>
+                                </div>
+                            </div>
+                            <div class="udid-content" data-udid-opcontent="2">
+                                <div class="row">
+                                <div class="col-lg-4 col-6 px-3 mt-3 d-flex align-items-center udids-bk">
+                                    <span class="col-auto me-2">option</span>
+                                    <span class="col me-2"><input type="text" class="input-BKstyle"></span>
+                                    <span class="col-auto"><button class="btn-delete udids-option"><i class="bi bi-trash"></i></button></span>
+                                </div>
+                                </div>       
+                            </div>
+                        </div>
+                        
+                    </section>
+                    <!--block-air-->
+                    <section class="tab-pane fade h-100 pe-2" id="nav-air" role="tabpanel" aria-labelledby="nav-break-air">
+                        <div class="container--bk d-flex justify-content-between p-3 mb-2 rounded-3">
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold me-2" style="font-size: 18px;white-space: nowrap;">AIR Reason Codes</p>
+                                <p style="color:#888888;">(FF910:)</p>
+                            </div>
+
+                            <div class="col-auto d-flex align-items-center">
+                                <button class="btn btn-primary shadow-none ms-2">確認</button>
+                                <button class="btn-BigPlus ms-2" data-companyinfo="air">
+                                    新增
+                                </button>
+                                <button class="btn btn-dark shadow-none ms-2">重設</button>
+                            </div>
+                        </div>
+
+                        <div id="RMtool-airlist">
+                            <div class="container--bk bk-detal p-3 mb-2 rounded-3">
+                                <div class="row mx-0">
+                                    <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                                    <p class="col-auto me-2">1</p>
+                                    <span class="col-auto me-2">Reason Code</span>
+                                    <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col ps-0 pe-3 d-flex align-items-center">
+                                    <span class="col-auto me-2">Description</span>
+                                    <span class="col"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col-auto px-0 d-flex align-items-center">
+                                    <button class="btn-delete"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </section>
+                    <!--block-hotel-->
+                    <section class="tab-pane fade h-100 pe-2" id="nav-hotel" role="tabpanel" aria-labelledby="nav-break-hotel">
+                        <div class="container--bk d-flex justify-content-between p-3 mb-2 rounded-3">
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold me-2" style="font-size: 18px;white-space: nowrap;">Hotel Reason Codes</p>
+                                <p style="color:#888888;">(FF950/)</p>
+                            </div>
+
+                            <div class="col-auto d-flex align-items-center">
+                                <button class="btn btn-primary shadow-none ms-2">確認</button>
+                                <button class="btn-BigPlus ms-2" data-companyinfo="hotel">新增</button>
+                                <button class="btn btn-dark shadow-none ms-2">重設</button>
+                            </div>
+                        </div>
+
+                        <div id="RMtool-hotellist">
+                            <div class="container--bk bk-detal p-3 mb-2 rounded-3">
+                                <div class="row mx-0">
+                                    <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                                    <p class="col-auto me-2">1</p>
+                                    <span class="col-auto me-2">Reason Code</span>
+                                    <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col ps-0 pe-3 d-flex align-items-center">
+                                    <span class="col-auto me-2">Description</span>
+                                    <span class="col"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col-auto px-0 d-flex align-items-center">
+                                    <button class="btn-delete"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </section>
+                    <!--block-car-->
+                    <section class="tab-pane fade h-100 pe-2" id="nav-car" role="tabpanel" aria-labelledby="nav-break-car">
+                        <div class="container--bk d-flex justify-content-between p-3 mb-2 rounded-3">
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold me-2" style="font-size: 18px;white-space: nowrap;">Car Reason Codes</p>
+                            <p style="color:#888888;">(FF960/)</p>
+                        </div>
+
+                        <div class="col-auto d-flex align-items-center">
+                            <button class="btn btn-primary shadow-none ms-2">確認</button>
+                            <button class="btn-BigPlus ms-2" data-companyinfo="car">新增</button>
+                            <button class="btn btn-dark shadow-none ms-2">重設</button>
+                        </div>
+                        </div>
+
+                        <div id="RMtool-carlist">
+                            <div class="container--bk bk-detal p-3 mb-2 rounded-3">
+                                <div class="row mx-0">
+                                    <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+                                    <p class="col-auto me-2">1</p>
+                                    <span class="col-auto me-2">Reason Code</span>
+                                    <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col ps-0 pe-3 d-flex align-items-center">
+                                    <span class="col-auto me-2">Description</span>
+                                    <span class="col"><input type="text" class="input-BKstyle"></span>
+                                    </div>
+                                    <div class="col-auto px-0 d-flex align-items-center">
+                                    <button class="btn-delete"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </section>
+
+                </div>
+                
+                
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./jquery/jquery.min.js?v=zp0HUArZHsK1JMJwdk7EyaM-eDINjTdOxADt5Ij2JRs">
+    </script>
+    <script src="./bootstrap/js/bootstrap.bundle.min.js?v=6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ">
+    </script>
+    <script>
+        $(document).ready(function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerElement) {
+                return new bootstrap.Tooltip(tooltipTriggerElement);
+            });
+        });
+    </script>
+    <script src="./jqueryui/jquery-ui.js" asp-append-version="true">
+    </script>
+    <script src="./vue/vue.global.prod.min.js" asp-append-version="true">
+    </script>
+    <script src="./axios/axios.js" asp-append-version="true">
+    </script>
+
+    <script src="./jquery/inputlist.js" crossorigin="anonymous"></script><!--inputlist-->
+    <script>// 右高度調整
+    $(function () {
+        let isResizing = false;
+        let startY = 0;
+        let startHeight = 0;
+
+        const $resizer = $('.resizer');
+        const $topPanel = $('.top-panel');
+
+        $resizer.on('mousedown', function (e) {
+        isResizing = true;
+        startY = e.clientY;
+        startHeight = $topPanel.height();
+        $('body').css('cursor', 'row-resize'); // 改變游標
+        e.preventDefault();
+        });
+
+        $(document).on('mousemove', function (e) {
+        if (!isResizing) return;
+
+        const dy = e.clientY - startY;
+        const newHeight = Math.max(100, startHeight + dy); // 限制最小高度
+        $topPanel.css('height', newHeight + 'px');
+        });
+
+        $(document).on('mouseup', function () {
+        isResizing = false;
+        $('body').css('cursor', 'default');
+        });
+    });
+    </script>
+
+    <script>//info mark說明文字
+    $(document).ready(function () {
+        $('.info-mark').on('mouseenter', function (e) {
+        const tooltipText = $(this).data('tooltip');
+        $('#tooltip').text(tooltipText).css('opacity', 1);
+        });
+
+        $('.info-mark').on('mousemove', function (e) {
+        $('#tooltip').css({
+            top: e.pageY - 30 + 'px', // 上方 30px
+            left: e.pageX + 'px'
+        });
+        });
+
+        $('.info-mark').on('mouseleave', function () {
+        $('#tooltip').css('opacity', 0);
+        });
+    });
+    </script>
+
+    <script>//info mark說明文字
+    $(document).ready(function () {
+        $('.info-mark').on('mouseenter', function (e) {
+        const tooltipText = $(this).data('tooltip');
+        $('#tooltip').text(tooltipText).css('opacity', 1);
+        });
+
+        $('.info-mark').on('mousemove', function (e) {
+        $('#tooltip').css({
+            top: e.pageY - 30 + 'px', // 上方 30px
+            left: e.pageX + 'px'
+        });
+        });
+
+        $('.info-mark').on('mouseleave', function () {
+        $('#tooltip').css('opacity', 0);
+        });
+    });
+    </script>
+
+<script>
+    // 新增項目
+    $(document).on('click', '.btn-BigPlus', function () {
+    const company = $(this).data('companyinfo'); // e.g., "AIR", "Hotel", "Car"
+    const section = $(`#nav-${company.toLowerCase()}`);
+    const list = section.find(`#RMtool-${company.toLowerCase()}list`);
+
+    const content = `
+        <div class="container--bk bk-detal p-3 mb-2 rounded-3">
+        <div class="row mx-0">
+            <div class="col-auto ps-0 pe-3 d-flex align-items-center">
+            <p class="col-auto me-2">?</p>
+            <span class="col-auto me-2">Reason Code</span>
+            <span class="col-auto"><input type="text" class="input-BKstyle"></span>
+            </div>
+            <div class="col ps-0 pe-3 d-flex align-items-center">
+            <span class="col-auto me-2">Description</span>
+            <span class="col"><input type="text" class="input-BKstyle"></span>
+            </div>
+            <div class="col-auto px-0 d-flex align-items-center">
+            <button class="btn-delete"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+        </div>
+    `;
+
+    list.append(content); // 正確插入到清單容器尾端
+    renumberItems(list);  // 正確針對該 list 編號
+    
+    });
+
+    //編號
+    function renumberItems(listContainer) {
+        listContainer.find('.container--bk .row').each(function(index) {
+            $(this).find('p:first').text(index + 1);
+        });
+    }
+
+    // 點垃圾桶按鈕刪除對應列
+    $(document).on('click', '.btn-delete', function () {
+        const section = $(this).closest('section');
+        $(this).closest('.container--bk.bk-detal').remove();
+        renumberItems(section);
+    });
+
+    </script>
+
+
+    <script>
+    // 通用 toggle 顯示功能，根據 data-udid-toggle 綁定內容區塊
+    $(document).on('change', '[data-udid-toggle]', function () {
+    const key = $(this).data('udid-toggle');
+    const checked = $(this).is(':checked');
+
+    const $addbtn = $(`[data-udid-addbtn="${key}"]`);
+    const $opcontent = $(`[data-udid-OPcontent="${key}"]`);
+
+    // 防止動畫重疊導致 transitionend 錯誤
+    $addbtn.off('transitionend');
+
+    if (checked) {
+        $addbtn.css({ display: 'inline-flex', width: '0px' });
+        requestAnimationFrame(() => {
+        $addbtn.css('width', '24px');
+        $addbtn.one('transitionend', function (e) {
+            if (e.originalEvent.propertyName === 'width') {
+            $(this).addClass('visible');
+            }
+        });
+        });
+        $opcontent.stop(true, true).slideDown(200);
+    } else {
+        $addbtn.removeClass('visible').one('transitionend', function (e) {
+        if (e.originalEvent.propertyName === 'opacity') {
+            $(this).css({ width: '0px' });
+            $(this).one('transitionend', function (e2) {
+            if (e2.originalEvent.propertyName === 'width') {
+                $(this).css('display', 'none');
+            }
+            });
+        }
+        });
+        $opcontent.stop(true, true).slideUp(200);
+    }
+    });
+
+    //UDID刪除小項目
+    $(document).on('click', '.btn-delete.udids-option', function () {
+    const $currentBlock = $(this).closest('.udid-content'); // 找到所屬的 UDID 區塊
+    const $deleteTarget = $(this).closest('.udids-bk');     // 找到要刪除的那一行
+
+    // 你可以加條件避免刪錯（例如不能少於一筆）
+    if ($currentBlock.find('.udids-bk').length > 1) {
+        $deleteTarget.remove();
+    } else {
+        alert('至少要保留一筆選項');
+    }
+    });
+
+    
+
+    // 按下新增按鈕，在對應的 udid-opcontent 裡的 .row 中插入一組 udids-bk 區塊
+    $(document).on('click', '[data-udid-addbtn]', function () {
+    const key = $(this).data('udid-addbtn');
+    const $row = $(`[data-udid-OPcontent="${key}"] .row`).first();
+
+    const newBlock = $(
+        `<div class="col-lg-4 col-6 px-3 mt-3 d-flex align-items-center udids-bk">
+        <span class="col-auto me-2">option</span>
+        <span class="col me-2">
+            <input type="text" class="input-BKstyle">
+        </span>
+        <span class="col-auto">
+            <button type="button" class="btn-delete udids-option">
+            <i class="bi bi-trash"></i>
+            </button>
+        </span>
+        </div>`
+    );
+
+    $row.append(newBlock);
+    });
+</script>
+</body>
+
+</html>

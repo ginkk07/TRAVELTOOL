@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCM Tool Kit - 首頁</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/main.css?v=BggizeEmffVW1aO9F9cEkQ5X2MnQUe38xWPVWomZDKo">
+    <link rel="stylesheet" href="./css/bta.css">
+    <link rel="stylesheet" href="./css/urgent_notify.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/loadingModal.css?v=qfzycXcwBGKyowZpxEwHGJcUPyw_f0szXZpiW5I-8mk">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Roboto&amp;display=swap" rel="stylesheet" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid no_padding h-100">
+            <nav class="nav_block h-100">
+                <div class="block_top">
+                    <div class="h3"><a href="./index.html" style="color: #fff;">FCM Tool Kit</a></div>
+                    <a class="icon_item icon_md icon_logout"  href="./login.html"></a>
+                </div>
+                <div class="block_content">
+                    <ul class="nav nav-tabs tab_style1" role="tablist">
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./amex.html">BTA (TXT格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./bta.html">BTA (XLSX格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./urgentnotify.html">緊急通知 BTA 交易</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./cta.html">CTA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link activeㄊ" href="./billingstatement.html">請款</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerfoot">
+                    <a href="./rmtool.html"><span>RM Tools</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content" id="billingStatementList" data-v-app="">
+        <div class="container-fluid no_padding">
+            <div class="info_block right_area_block">
+                <!--top-->
+                <div class="block_top w-100">
+                    <div class="search_box w-100 m-0">
+                        <div class="box_content flex-column w-100 m-0">
+                            <div class="row col-6 flex-wrap m-0 w-100 mb-4">
+                                <div class="col-6 mb-3">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="DepDateS">機票出發日 (起)<span>*</span></label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="DepDateS" required="" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="DepDateE">機票出發日 (迄)<span>*</span></label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="DepDateE" min="2024-05-28" required="" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="AORDDateS">帳單日期 (起)</label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="AORDDateS" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="AORDDateE">帳單日期 (迄)</label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="AORDDateE" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row flex-row-reverse m-0 w-100">
+                                <div class="col-3">
+                                    <button class="btn btn-primary w-100">搜尋</button>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-primary w-100">下載</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--main-->
+                <div class="blcok_content">
+                    <div class="billingstatement_list_table justify-content-center">
+                        <div class="list_table">
+                            <div class="table_head">
+                                <p class="no_result">尚未有任何內容</p>
+                            </div>
+                            <div class="table_body">
+                                <!---->
+                            </div>
+                            <div class="table_bottom">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-8 col-sm-8">
+                                        <div class="page_number_box">
+                                            <ul class="pagination">
+                                                <li class="page-item disabled">
+                                                    <button class="page-link"><i class="material-icons">keyboard_arrow_left</i></button>
+                                                </li>
+                                                <li class="page-item active">
+                                                    <button class="page-link">1</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">2</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">3</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">4</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">5</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">6</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">7</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">8</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">9</button>
+                                                </li>
+                                                <li class="page-item" style="display: none;">
+                                                    <button class="page-link">10</button>
+                                                </li>
+                                                <li class="page-item disabled">
+                                                    <button class="page-link"><i class="material-icons">keyboard_arrow_right</i></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12">
+                                        <div class="page_info_box">
+                                            <div class="page_jump_box">
+                                                <div class="fill_item">
+                                                    <div class="item_content"> 共 1 頁
+                                                        <input type="text" class="verify_number" placeholder="請輸入頁碼" max="1" maxlength="1">
+                                                        <button class="btn btn-primary btn_min_width">跳轉</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal alert_modal fade" id="AlertModal" alert-type="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="semi-bold message_content"></h4>
+                    <h5 class="semi-bold message_sub_content"></h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_ok" data-dismiss="modal">確定</button>
+                    <button type="button" class="btn btn_cxl" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn_other" data-dismiss="modal">其他</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade loading_modal" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading_group">
+                        <span class="circle circle-1"></span>
+                        <span class="circle circle-2"></span>
+                        <span class="circle circle-3"></span>
+                        <span class="circle circle-4"></span>
+                        <span class="circle circle-5"></span>
+                        <span class="circle circle-6"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./jquery/jquery.min.js?v=zp0HUArZHsK1JMJwdk7EyaM-eDINjTdOxADt5Ij2JRs"></script>
+    <script src="./bootstrap/js/bootstrap.bundle.min.js?v=6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ"></script>
+    <script>
+        $(document).ready(function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerElement) {
+                return new bootstrap.Tooltip(tooltipTriggerElement);
+            });
+        });
+    </script>
+    <script src="./jqueryui/jquery-ui.js" asp-append-version="true"></script>
+    <script src="./vue/vue.global.prod.min.js" asp-append-version="true"></script>
+    <script src="./axios/axios.js" asp-append-version="true"></script>
+</body>
+
+</html>

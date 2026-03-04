@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FCM Tool Kit - 請款</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/main_dark.css">
+    <link rel="stylesheet" href="./css/bta.css">
+    <link rel="stylesheet" href="./css/loadingModal.css?v=qfzycXcwBGKyowZpxEwHGJcUPyw_f0szXZpiW5I-8mk" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Roboto&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/billingstatement.css?v=GJao8iN6pc49wcuGcBk0H9WrGVCWJPJf5H066ZU299c" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid no_padding h-100">
+            <nav class="nav_block h-100">
+                <div class="block_top">
+                    <div class="h3"><a href="./index.html" style="color: #fff;">FCM Tool Kit</a></div>
+                    <a class="icon_item icon_md icon_logout"  href="./login.html"></a>
+                </div>
+                <div class="block_content">
+                    <ul class="nav nav-tabs tab_style1" role="tablist">
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./amex.html">BTA (TXT格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./bta.html">BTA (XLSX格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./urgentnotify.html">緊急通知 BTA 交易</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./cta.html">CTA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="./billingstatement.html">請款</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerfoot">
+                    <button id="theme-toggle" class="mb-3"><i class="bi bi-brightness-high-fill"></i></button>
+                    <a href="./rmtool.html"><span>RM Tools</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--電燈開關-->
+    <script>
+    (function() {
+        const toggleBtn   = document.getElementById('theme-toggle');
+        const rootEl      = document.documentElement;
+        const storageKey  = 'theme-preference';
+
+        // 1. 初始化：读取 localStorage 或默认 data-theme
+        const currentTheme = localStorage.getItem(storageKey)
+                                || rootEl.getAttribute('data-theme')
+                                || 'light';
+        rootEl.setAttribute('data-theme', currentTheme);
+
+        // 2. 点击切换：只切换 data-theme 并写回 localStorage
+        toggleBtn.addEventListener('click', () => {
+            const newTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            rootEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem(storageKey, newTheme);
+        });
+    })();
+    </script>
+    <div class="content" id="billingStatementList">
+        <div class="container-fluid no_padding">
+            <div class="info_block right_area_block">
+                <!--top-->
+                <div class="block_top w-100">
+                    <div class="search_box w-100 m-0">
+                        <div class="box_content flex-column w-100 m-0">
+                            <div class="row col-6 flex-wrap m-0 w-100 mb-4">
+                                <div class="col-6 mb-3">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="DepDateS">機票出發日 (起)<span>*</span></label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="DepDateS" required="" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="DepDateE">機票出發日 (迄)<span>*</span></label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="DepDateE" min="2024-05-28" required="" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="AORDDateS">帳單日期 (起)</label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="AORDDateS" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="fill_item">
+                                        <label class="item_title" for="AORDDateE">帳單日期 (迄)</label>
+                                        <div class="item_content">
+                                            <input type="date" class="form-control" id="AORDDateE" min="2024-05-28" max="2026-05-28" pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row flex-row-reverse m-0 w-100">
+                                <div class="col-3">
+                                    <button class="btn btn-primary w-100">搜尋</button>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-primary w-100">下載</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--main-->
+                <div class="blcok_content mb-3" style="height: auto;">
+                    <div class="billingstatement_list_table justify-content-center">
+                        <div class="list_table">
+                            <div class="table_body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>啟程日期</th>
+                                            <th>收款單號</th>
+                                            <th>收款日期</th>
+                                            <th>開票日期</th>
+                                            <th>帳單日期</th>
+                                            <th>帳單號碼</th>
+                                            <th>代轉日期</th>
+                                            <th>代轉編號</th>
+                                            <th>報名日期</th>
+                                            <th>訂單日期</th>
+                                            <th>訂單編號</th>
+                                            <th>應收帳號</th>
+                                            <th>旅客中文姓名+英文</th>
+                                            <th>旅客 EMAIL</th>
+                                            <th>銷售部門</th>
+                                            <th>業務人員</th>
+                                            <th>出發城市</th>
+                                            <th>抵達城市</th>
+                                            <th>航程</th>
+                                            <th>票號</th>
+                                            <th>回程日期</th>
+                                            <th>開票人</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025/06/04</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/03</td>
+                                            <td>A0230516</td>
+                                            <td>2025/06/03</td>
+                                            <td>T38661000</td>
+                                            <td>2025/06/02</td>
+                                            <td>2025/06/02</td>
+                                            <td>00234195</td>
+                                            <td>美商科磊</td>
+                                            <td>張松勳(JHANG SONG SYUN)</td>
+                                            <td>test@example.com</td>
+                                            <td>環球差旅 F 部</td>
+                                            <td>郭政昌</td>
+                                            <td>台北市</td>
+                                            <td>福岡</td>
+                                            <td>TPE/FUK/TPE</td>
+                                            <td>6952875488418</td>
+                                            <td>2025/06/27</td>
+                                            <td>余珮瑄</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--bottom-->
+                <div class="table_bottom">
+                    <div class="row flex-nowrap justify-content-between">
+                        <div class="col-auto">
+                            <div class="page_number_box">
+                                <ul class="pagination m-0">
+                                    <li :class="PageIndex==1?'page-item disabled':'page-item'">
+                                        <button class="page-link" oclick="nextPage(-10)">
+                                                        <i class="material-icons">keyboard_arrow_left</i>
+                                                    </button>
+                                    </li>
+                                    <li v-for="page in 10"
+                                        :class="PageIndex==pageSerial(page)?'page-item active':'page-item'"
+                                        v-show="page <= TotalPages">
+                                        <button class="page-link" v-html="pageSerial(page)" @click="setPage(page,true)">-</button>
+                                    </li>
+                                    <li :class="PageIndex==TotalPages?'page-item disabled':'page-item'">
+                                        <button class="page-link" @click="nextPage(10)">
+                                                        <i class="material-icons">keyboard_arrow_right</i>
+                                                    </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="page_info_box">
+                                <div class="page_jump_box">
+                                    <div class="fill_item">
+                                        <div class="item_content d-flex align-items-center">
+                                            <p class="mb-0 darkmod-text-white">共 1 頁</p>
+                                            <input type="text" class="verify_number form-control mx-2" value="1" placeholder="請輸入頁碼" style="height: 38px;width: 38px;" :max="TotalPages" :maxlength="TotalPages.toString().length">
+                                            <button class="btn btn-primary btn_min_width" onclick="setPage(SetPage)">跳轉</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--bottom end-->
+            </div>
+        </div>
+    </div>
+    <div b-iktac75vem class="modal alert_modal fade" id="AlertModal" alert-type="" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div b-iktac75vem class="modal-dialog">
+            <div b-iktac75vem class="modal-content">
+                <div b-iktac75vem class="modal-header">
+                    <button b-iktac75vem type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div b-iktac75vem class="modal-body">
+                    <h4 b-iktac75vem class="semi-bold message_content"></h4>
+                    <h5 b-iktac75vem class="semi-bold message_sub_content"></h5>
+                </div>
+                <div b-iktac75vem class="modal-footer">
+                    <button b-iktac75vem type="button" class="btn btn_ok" data-dismiss="modal">確定</button>
+                    <button b-iktac75vem type="button" class="btn btn_cxl" data-dismiss="modal">取消</button>
+                    <button b-iktac75vem type="button" class="btn btn_other" data-dismiss="modal">其他</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div b-iktac75vem class="modal fade loading_modal" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
+        <div b-iktac75vem class="modal-dialog" role="document">
+            <div b-iktac75vem class="modal-content">
+                <div b-iktac75vem class="modal-body">
+                    <div b-iktac75vem class="loading_group">
+                        <span b-iktac75vem class="circle circle-1"></span>
+                        <span b-iktac75vem class="circle circle-2"></span>
+                        <span b-iktac75vem class="circle circle-3"></span>
+                        <span b-iktac75vem class="circle circle-4"></span>
+                        <span b-iktac75vem class="circle circle-5"></span>
+                        <span b-iktac75vem class="circle circle-6"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/jquery/jquery.min.js?v=zp0HUArZHsK1JMJwdk7EyaM-eDINjTdOxADt5Ij2JRs"></script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js?v=6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ"></script>
+    <script>
+        $(document).ready(function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerElement) {
+                return new bootstrap.Tooltip(tooltipTriggerElement);
+            });
+        });
+    </script>
+    <script src="/jqueryui/jquery-ui.js?v=xLD7nhI62fcsEZK2_v8LsBcb4lG7dgULkuXoXB_j91c"></script>
+    <script src="/jquery-validate/jquery.validate.min.js?v=6e0N-WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w"></script>
+    <script src="/jquery-validate/additional-methods.min.js?v=N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc"></script>
+    <script src="/jquery-validate/localization/messages_zh_TW.min.js?v=7BHAWacTW6PpAR8AwiezsjQk1_9_tuOY6Lwr4ouVLbg">
+    </script>
+    <script
+        src="/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js?v=RFWFWIIPsjB4DucR4jqwxTWw13ZmtI-s6tVR2LJmZXk">
+    </script>
+    <script src="/vue/vue.global.prod.js?v=57hZC-n4EnA3DvPcK6ch3RLxTRh-zFd_C2NKiw7_e4s"></script>
+    <script src="/axios/axios.js?v=0YSVhCkqkKZrb6eHBEQZvgYMHR8mACk9O884cdkpKG8"></script>
+    <script>
+        const app = {
+            computed: {
+                pageSerial: function (page) {
+                    return function (page) {
+                        if (this.PageIndex <= 5) { //目前頁數小於等於第5頁
+                            this.PageStart = 0;
+                        }
+                        else if (this.PageIndex >= this.TotalPages - 5) { //目前頁數大於等於最後頁-5
+                            if (this.TotalPages > 10) {
+                                this.PageStart = this.TotalPages - 10;
+                            }
+                            else {
+                                this.PageStart = 0;
+                            }
+                        }
+                        else {
+                            this.PageStart = this.PageIndex - 5;
+                        }
+                        return this.PageStart + page;
+                    }
+                }
+            },
+            data() {
+                return {
+                    AORDDateS: '',
+                    AORDDateE: '',
+                    DepDateS: '2025-06-04',
+                    DepDateE: '2025-06-04',
+                    Items: [],
+                    PageIndex: 1,
+                    SetPage: 1,
+                    TotalPages: 1
+                }
+            },
+            methods: {
+                download() {
+                    $('#loadingModal').modal('show');
+                    var url = '/BillingStatement/Download';
+                    var config = {
+                        headers: {
+                            'X-XSRF-TOKEN': 'CfDJ8BdsNEBJDEhEsGF1T06UsdbGC8UaQB6U9HTX82QFbI7md6aAyvxm7dzczNivETrV3ArJGUM-wuMLZ4T9XlcdTIdoWnlbuXVyfDTEd5a2CJL3K0r0G7mZY2HcYvm5b3Rab_CBD46RDMkQP2kEL9c4ISE',
+                        },
+                        responseType: 'blob'
+                    }
+                    var postData = {
+                        AORDDateS: this.AORDDateS,
+                        AORDDateE: this.AORDDateE,
+                        DepDateS: this.DepDateS,
+                        DepDateE: this.DepDateE
+                    };
+                    axios.post(url, postData, config)
+                        .then(function (response) {
+                            const contentDisposition = response.headers['content-disposition'];
+                            if (contentDisposition && contentDisposition.indexOf('attachment') !== -1) {
+                                const fileNameMatch = contentDisposition.match(/filename\*=(?:UTF-8'')?([^;]+)/);
+                                if (fileNameMatch && fileNameMatch.length === 2) {
+                                    fileName = decodeURIComponent(fileNameMatch[1]);
+                                }
+                            }
+                            const url = window.URL.createObjectURL(new Blob([response.data]));
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            $('#loadingModal').modal('hide');
+                            alert("已產生檔案: " + fileName);
+                        })
+                        .catch(function (error) {
+                            $('#loadingModal').modal('hide');
+                            alert(error.data);
+                            console.log(error);
+                        });
+                },
+                nextPage(delta){
+                    try {
+                        console.log(delta);
+                        var currentPage = parseInt(this.PageIndex);
+                        var maxPages = this.TotalPages;
+                        if ((delta > 0 && currentPage < maxPages) || (delta < 0 && currentPage > 1)) {
+                            this.PageIndex = currentPage + delta;
+                            this.SetPage = currentPage + delta;
+                            this.search();
+                        }
+                    }
+                    catch (error) {
+                        console.error('An error occurred:', error.message);
+                        alert('變更頁次時發生錯誤:'+error.message);
+                    }
+                },
+                search() {
+                    $('#loadingModal').modal('show');
+                    var vueObj = this;
+                    var url = '/BillingStatement/List';
+                    var postData = {
+                        AORDDateS: this.AORDDateS,
+                        AORDDateE: this.AORDDateE,
+                        DepDateS: this.DepDateS,
+                        DepDateE: this.DepDateE,
+                        PageIndex: this.PageIndex
+                    };
+                    var config = {
+                        headers: {
+                            'X-XSRF-TOKEN': 'CfDJ8BdsNEBJDEhEsGF1T06UsdbGC8UaQB6U9HTX82QFbI7md6aAyvxm7dzczNivETrV3ArJGUM-wuMLZ4T9XlcdTIdoWnlbuXVyfDTEd5a2CJL3K0r0G7mZY2HcYvm5b3Rab_CBD46RDMkQP2kEL9c4ISE',
+                        }
+                    }
+                    axios.post(url, postData, config)
+                        .then(function (response) {
+                            $('#loadingModal').modal('hide');
+                            vueObj.Items = response.data.BillingStatements;
+                            vueObj.TotalPages = response.data.TotalPages;
+                        })
+                        .catch(function (error) {
+                            vueObj.Items = [];
+                            $('#loadingModal').modal('hide');
+                            alert('查無資料，請變更出發日期區間後重新查詢。');
+                            console.log(error);
+                        });
+                },
+                setPage(pageIndex, isStart = false) {
+                    var changePage = pageIndex;
+                    if(isStart == true){
+                        changePage = this.pageSerial(pageIndex);
+                    }
+                    // 同一頁則不動作
+                    if(this.PageIndex == changePage){
+                        return;
+                    }
+                    else if(changePage <= this.TotalPages){
+                        this.PageIndex = changePage;
+                    }
+                    else{
+                        this.SetPage = this.TotalPages;
+                        this.PageIndex = this.TotalPages;
+                    }
+                    this.search();
+                },
+            }
+        }
+        Vue.createApp(app).mount('#billingStatementList')
+    </script>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCM Tool Kit - 首頁</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/main.css?v=BggizeEmffVW1aO9F9cEkQ5X2MnQUe38xWPVWomZDKo">
+    <link rel="stylesheet" href="./css/bta.css?v=sKIQRfQriISuQ9l_44b1zHfQniGXJhGonVtB2LlSuIs">
+    <link rel="stylesheet" href="./css/pnrtool.css">
+    <link rel="stylesheet" href="./css/pnrtool_dark.css">
+    <link rel="stylesheet" href="./css/loadingModal.css?v=qfzycXcwBGKyowZpxEwHGJcUPyw_f0szXZpiW5I-8mk">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Roboto&amp;display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid no_padding h-100">
+            <nav class="nav_block h-100">
+                <div class="block_top">
+                    <div class="h3"><a href="./index.html" style="color: #fff;">FCM Tool Kit</a></div>
+                    <a class="icon_item icon_md icon_logout"  href="./login.html"></a>
+                </div>
+                <div class="block_content">
+                    <ul class="nav nav-tabs tab_style1" role="tablist">
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./amex.html">BTA (TXT格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./bta.html">BTA (XLSX格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./urgentnotify.html">緊急通知 BTA 交易</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./cta.html">CTA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./billingstatement.html">請款</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerfoot">
+                    <button id="theme-toggle" class="mb-3"><i class="bi bi-brightness-high-fill"></i></button>
+                    <a href="./rmtool.html"><span>RM Tools</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--電燈開關-->
+    <script>
+    (function() {
+        const toggleBtn   = document.getElementById('theme-toggle');
+        const rootEl      = document.documentElement;
+        const storageKey  = 'theme-preference';
+
+        // 1. 初始化：读取 localStorage 或默认 data-theme
+        const currentTheme = localStorage.getItem(storageKey)
+                                || rootEl.getAttribute('data-theme')
+                                || 'light';
+        rootEl.setAttribute('data-theme', currentTheme);
+
+        // 2. 点击切换：只切换 data-theme 并写回 localStorage
+        toggleBtn.addEventListener('click', () => {
+            const newTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            rootEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem(storageKey, newTheme);
+        });
+    })();
+    </script>
+
+
+    <div class="content">
+        <div class="container-fluid no_padding">
+            <div class="info_block right_area_block">
+                <div class="mx-0 flex-nowrap">
+                    <!--container-->
+                    <div class="w-100 p-0">
+                        <!--top-->
+                        <div class="d-flex align-items-center justify-content-between my-3 w-100">
+                            <div class="d-flex align-items-center">
+                            <div class="mx-2 RMtool_Title" style="font-size: 27px;">Advance RM Tool</div>
+                            <div class="input-mixname-style3 ms-3">
+                                <span>PNR</span>
+                                <p>58N7Q9</p>
+                            </div>
+
+                            <div class="input-mixname-style3 ms-3">
+                                <span>OID</span>
+                                <p>12345678</p>
+                            </div>
+
+                            <div class="input-mixname ms-3" style="font-size: 20px;">
+                                <input type="text" placeholder="Search Code">
+                                <button class="px-3 py-1 m-1 btn btn-primary"><i class="bi bi-search"></i></button>
+                            </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                
+                                <button type="button" class="btn-gray mx-2 px-2" style="width: 68px;height: 45px;font-size: 30px;" onclick="location.href='./rmtool-companyInfo.html'">
+                                <i class="bi bi-gear-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="tooltip" class="tooltip"></div>
+                        
+                        <!--主體-->
+                        <div class="row flex-nowrap mx-0 px-0 w-100" style="overflow-x: clip;">
+                            <!--Left container-->
+                            <div class="col px-0" style="width: 50%;">
+                                <section class="container--bk mb-3 py-4 px-3 rounded-3" style="width: 100%;">
+                                    <div class="row mx-0 mb-3">
+                                        <div class="col-6 ps-0 pe-3 d-flex align-items-center">
+                                            <span class="col-auto me-3">Tittle</span>
+                                            <span class="col">
+                                                <input type="text" class="input-BKstyle" placeholder="title name" value="Name" readonly>
+                                            </span>
+                                        </div>
+                                        <div class="col-6 d-flex align-items-center justify-content-between px-0">
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="checkbox" id="checkbox-babybtn" disabled checked>
+                                                <label class="checkbox-s1-label" for="checkbox-babybtn"></label>
+
+                                                <spna>Baby</spna>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <input type="radio" class="btn-check" name="user-group-number" id="user-group-1" checked/>
+                                                <label class="radio-GREENstyle" for="user-group-1">1</label>
+                                    
+                                                <input type="radio" class="btn-check" name="user-group-number" id="user-group-2">
+                                                <label class="radio-GREENstyle" for="user-group-2">2</label>
+
+                                                <input type="radio" class="btn-check" name="user-group-number" id="user-group-3">
+                                                <label class="radio-GREENstyle" for="user-group-3">3</label>
+
+                                                <input type="radio" class="btn-check" name="user-group-number" id="user-group-4">
+                                                <label class="radio-GREENstyle" for="user-group-4">4</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0">
+                                        <div class="col-6 ps-0 pe-3 mb-3 d-flex align-items-center">
+                                            <span class="col-auto me-3">Cellphone</span>
+                                            <span class="col"><input type="text" class="input-BKstyle" value="+886987654321" readonly/></span>
+                                        </div>
+                                        <div class="col-6 px-0 mb-3 d-flex align-items-center">
+                                            <span class="col-auto me-3">Email</span>
+                                            <span class="col"><input type="text" class="input-BKstyle" value="tristar@tristar.com.tw" readonly/></span>
+                                        </div>
+                                        <div class="col-12 px-0 d-flex align-items-center">
+                                            <span class="col-auto me-3">Company</span>
+                                            <span class="col"><input type="text" class="input-BKstyle" value="tristar tour" readonly></span>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!--航班資訊-->
+                                <section class="container--bk mb-3 py-4 px-3 rounded-3" style="width: 100%;">
+                                    <h3 class="fw-bold mb-3 ps-3">航班資訊(Flight Information)</h3>
+                                    <div class="scrollstyle mb-3" style="width: 100%;">
+                                    <table class="table-Nstyle">
+                                        <thead>
+                                        <tr>
+                                            <th width="1%">
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="checkbox" id="FlightInfo-all">
+                                                <label class="checkbox-s1-label" for="FlightInfo-all"></label>
+                                            </div>
+                                            </th>
+                                            <th>航段</th>
+                                            <th>起飛時間</th>
+                                            <th>抵達時間</th>
+                                            <th>起飛城市</th>
+                                            <th>抵達城市</th>
+                                            <th>航段狀態</th>
+                                            <th>Flown/Used</th>
+                                            <th>Reason Code(註記)</th>
+                                            <th>賣價(註記)</th>
+                                            <th>最低價(註記)</th>
+                                            <th>最高價(註記)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="checkbox" id="FlightInfo-item1">
+                                                <label class="checkbox-s1-label" for="FlightInfo-item1"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>SIN</td>
+                                            <td>HK</td>
+                                            <td>N</td>
+                                            <td>LU</td>
+                                            <td>17500</td>
+                                            <td>23600</td>
+                                            <td>17500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="checkbox" id="FlightInfo-item2">
+                                                <label class="checkbox-s1-label" for="FlightInfo-item2"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>SIN</td>
+                                            <td>HK</td>
+                                            <td>N</td>
+                                            <td>LU</td>
+                                            <td>17500</td>
+                                            <td>23600</td>
+                                            <td>17500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="checkbox" id="FlightInfo-item3">
+                                                <label class="checkbox-s1-label" for="FlightInfo-item3"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>SIN</td>
+                                            <td>HK</td>
+                                            <td>N</td>
+                                            <td>LU</td>
+                                            <td>17500</td>
+                                            <td>23600</td>
+                                            <td>17500</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+
+                                    <div class="row mx-0" style="width: 100%;">
+                                        <div class="col-12 ps-0 pe-3 mb-3 d-flex align-items-center">
+                                            <div class="input-mixname">
+                                            <span class="info-mark" data-tooltip="Raeson Code的說明文字">Raeson Code<span><i class="bi bi-info-lg"></i></span></span>
+                                            <select style="width: 248px;">
+                                                <option selected>--Select--</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                    <div class="col-auto ps-0 pe-3 mb-3 d-flex align-items-center">價格</div>
+                                    <div class="col-auto ps-0 pe-3 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname">
+                                        <span>賣價</span>
+                                        <input type="text" value="" style="width: 108px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto ps-0 pe-3 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname">
+                                        <span>最高價</span>
+                                        <input type="text" value="" style="width: 108px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto ps-0 pe-3 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname">
+                                        <span>最低價</span>
+                                        <input type="text" value="" style="width: 108px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto px-0 mb-3 d-flex align-items-center">
+                                        <button class="btn btn-primary shadow-none" style="font-size: 15px;">Submit</button>
+                                    </div>
+
+                                    </div>
+                                </section>
+
+                                <!--住房資訊-->
+                                <section class="container--bk mb-3 py-4 px-3 rounded-3" style="width: 100%;">
+                                    <h3 class="fw-bold mb-3 ps-3">住房資訊(Housing information)</h3>
+                                    <div class="scrollstyle mb-3" style="width: 100%;">
+                                    <table class="table-Nstyle">
+                                        <thead>
+                                        <tr>
+                                            <th width="1%"></th>
+                                            <th>航段</th>
+                                            <th>入住日期</th>
+                                            <th>退房日期</th>
+                                            <th>城市</th>
+                                            <th>價格</th>
+                                            <th>Reason Code(註記)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="radio" name="HousingInfo" id="HousingRadio-item1" checked>
+                                                <label class="checkbox-s1-label" for="HousingRadio-item1"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>17500</td>
+                                            <td>EXP-123456</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="radio" name="HousingInfo" id="HousingRadio-item2" checked>
+                                                <label class="checkbox-s1-label" for="HousingRadio-item2"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>17500</td>
+                                            <td>EXP-123456</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="radio" name="HousingInfo" id="HousingRadio-item3" checked>
+                                                <label class="checkbox-s1-label" for="HousingRadio-item3"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>17500</td>
+                                            <td>EXP-123456</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <div class="row mx-0" style="width: 100%;">
+                                    <div class="col-auto ps-0 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname">
+                                        <span class="info-mark" data-tooltip="Raeson Code的說明文字">Raeson Code<span><i class="bi bi-info-lg"></i></span></span>
+                                        <select style="width: 248px;">
+                                            <option selected>--Select--</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                        </div>
+
+                                        <button class="btn btn-primary shadow-none ms-2" style="font-size: 15px;">Submit</button>
+                                    </div>
+                                    <div class="col-auto px-0 mb-3 d-flex align-items-center">
+                                        <button class="btn btn-yellow shadow-none" style="font-size: 15px;">Approval Total Rate</button>
+                                    </div>
+                                    </div>
+                                </section>
+
+                                <!--租車資訊-->
+                                <section class="container--bk mb-3 py-4 px-3 rounded-3" style="width: 100%;">
+                                    <h3 class="fw-bold mb-3 ps-3">租車資訊(Car rental information)</h3>
+                                    <div class="scrollstyle mb-3" style="width: 100%;">
+                                    <table class="table-Nstyle">
+                                        <thead>
+                                        <tr>
+                                            <th width="1%"></th>
+                                            <th>航段</th>
+                                            <th>取車時間</th>
+                                            <th>還車時間</th>
+                                            <th>取車城市</th>
+                                            <th>還車城市</th>
+                                            <th>租車公司</th>
+                                            <th>Reason Code(註記)</th>
+                                            <th>價格(註記)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="radio" name="CarRentalInfo" id="CarRentalRadio-item1" checked>
+                                                <label class="checkbox-s1-label" for="CarRentalRadio-item1"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>TPE</td>
+                                            <td>EXP-123456</td>
+                                            <td>EXP-123456</td>
+                                            <td>EXP-123456</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <div class="d-flex align-items-center">
+                                                <input class="checkbox-s1" type="radio" name="CarRentalInfo" id="CarRentalRadio-item2">
+                                                <label class="checkbox-s1-label" for="CarRentalRadio-item2"></label>
+                                            </div>
+                                            </td>
+                                            <td>S2</td>
+                                            <td>2025/04/20 08:00</td>
+                                            <td>2025/04/20 12:40</td>
+                                            <td>TPE</td>
+                                            <td>TPE</td>
+                                            <td>EXP-123456</td>
+                                            <td>EXP-123456</td>
+                                            <td>EXP-123456</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <div class="row mx-0" style="width: 100%;">
+                                    <div class="col-auto ps-0 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname">
+                                        <span class="info-mark" data-tooltip="Raeson Code的說明文字">Raeson Code<span><i class="bi bi-info-lg"></i></span></span>
+                                        <select style="width: 248px;">
+                                            <option selected>--Select--</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                        </div>
+
+                                        <button class="btn btn-primary shadow-none ms-2" style="font-size: 15px;">Submit</button>
+                                    </div>
+                                    <div class="col-auto px-0 pe-3 mb-3 d-flex align-items-center">
+                                        <div class="input-mixname" >
+                                        <select style="width: 120px;">
+                                            <option selected>--選擇貨幣--</option>
+                                            <option value="1">$NT</option>
+                                            <option value="2">$USD</option>
+                                            <option value="3">$EUR</option>
+                                        </select>
+                                        <input type="text" value="" placeholder="總金額" style="width: 135px;border-left: 1px solid #b5b5b5;">
+                                        </div>
+                                        
+                                        <button class="btn btn-primary shadow-none ms-2" style="font-size: 15px;">Submit</button>
+                                    </div>
+                                    <div class="col-auto px-0 mb-3 d-flex align-items-center">
+                                        <button class="btn btn-yellow shadow-none" style="font-size: 15px;">Approval Total Rate</button>
+                                    </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <!--Right container-->
+                            <div id="pnrtool-right-container" class="col-auto">
+                                <div style="position: sticky;top:18px;">
+                                    <div class="input-mixname mb-3 py-1 pe-2">
+                                        <span style="flex: auto 0 0;">SO</span>
+                                        <input type="text" style="flex: 1 0 0;" value="58N7Q9">
+                                        <button class="btn btn-primary shadow-none py-1 px-2" style="font-size: 14px;flex: auto 0 0;">送出</button>
+                                    </div>
+                                    <div class="resize-container">
+                                        <section class="panel top-panel container--bk p-3 rounded-3 shadow-none">
+                                            <div class="scrollstyle pe-2" style="height: 100%;">
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID1 的說明文字">
+                                                    UDID1<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID1" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID2 的說明文字">
+                                                    UDID2<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID2" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID3 的說明文字">
+                                                    UDID3<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID3" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID4 的說明文字">
+                                                    UDID4<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID4" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID5 的說明文字">
+                                                    UDID5<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID5" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <div class="d-flex align-items-center row mx-0 mt-1 mb-3">
+                                                <div class="col-auto px-0 me-2 info-mark" data-tooltip="這是 UDID6 的說明文字">
+                                                    UDID6<span><i class="bi bi-info-lg"></i></span>
+                                                </div>
+                                                <div class="input-mixname-style2 inputList col p-0">
+                                                    <input type="text" placeholder="搜尋選擇" data-inputlist="UDID6" value="">
+                                                    <button><i class="bi bi-caret-right-fill"></i></button>
+                                                </div>
+                                                </div>
+                                                <!--UDID#menu-->
+                                                <ul class="inputList-menu scrollstyle" data-inputlistmenu="UDID1">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                                <ul class="inputList-menu scrollstyle" data-inputlistmenu="UDID2">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                                <ul class="inputList-menu" data-inputlistmenu="UDID3">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                                <ul class="inputList-menu scrollstyle" data-inputlistmenu="UDID4">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                                <ul class="inputList-menu scrollstyle" data-inputlistmenu="UDID5">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                                <ul class="inputList-menu scrollstyle" data-inputlistmenu="UDID6">
+                                                <li data-value="ABC雞肉">ABC雞肉</li>
+                                                <li data-value="ABC豬肉">ABC豬肉</li>
+                                                <li data-value="DC牛肉">DC牛肉</li>
+                                                <li data-value="DC羊肉">DC羊肉</li>
+                                                <li data-value="EA兔肉">EA兔肉</li>
+                                                </ul>
+                                            </div>
+                                        </section>
+                                        <div class="resizer"></div>
+                                        <section class="panel bottom-panel container--bk p-3 rounded-3 shadow-none" style="overflow: hidden;">
+                                            <p class="mb-2">寫入預覽</p>
+                                            <div class="scrollstyle preview-window pe-2 ps-0">
+                                                <table class="table-N2style">
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM*FF900/00125//RM*FF900/0012548RM*FF900/00125</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="42px"><button class="X-button"><i class="bi bi-x-lg"></i></button></td>
+                                                    <td>RM*FF900/0012548RM</td>
+                                                </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="row mx-0 mt-2">
+                                                <div class="col-12 p-0">
+                                                <button class="btn btn-primary shadow-none w-100" style="font-size: 15px;">寫入</button>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!---->
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="./jquery/jquery.min.js?v=zp0HUArZHsK1JMJwdk7EyaM-eDINjTdOxADt5Ij2JRs">
+    </script>
+    <script src="./bootstrap/js/bootstrap.bundle.min.js?v=6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ">
+    </script>
+    <script>
+        $(document).ready(function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerElement) {
+                return new bootstrap.Tooltip(tooltipTriggerElement);
+            });
+        });
+    </script>
+    <script src="./jqueryui/jquery-ui.js" asp-append-version="true">
+    </script>
+    <script src="./vue/vue.global.prod.min.js" asp-append-version="true">
+    </script>
+    <script src="./axios/axios.js" asp-append-version="true">
+    </script>
+
+    <script src="./jquery/inputlist.js" crossorigin="anonymous"></script><!--inputlist-->
+    <script>// 右高度調整
+    $(function () {
+        let isResizing = false;
+        let startY = 0;
+        let startHeight = 0;
+
+        const $resizer = $('.resizer');
+        const $topPanel = $('.top-panel');
+
+        $resizer.on('mousedown', function (e) {
+        isResizing = true;
+        startY = e.clientY;
+        startHeight = $topPanel.height();
+        $('body').css('cursor', 'row-resize'); // 改變游標
+        e.preventDefault();
+        });
+
+        $(document).on('mousemove', function (e) {
+        if (!isResizing) return;
+
+        const dy = e.clientY - startY;
+        const newHeight = Math.max(100, startHeight + dy); // 限制最小高度
+        $topPanel.css('height', newHeight + 'px');
+        });
+
+        $(document).on('mouseup', function () {
+        isResizing = false;
+        $('body').css('cursor', 'default');
+        });
+    });
+    </script>
+    <script>//info mark說明文字
+    $(document).ready(function () {
+        $('.info-mark').on('mouseenter', function (e) {
+        const tooltipText = $(this).data('tooltip');
+        $('#tooltip').text(tooltipText).css('opacity', 1);
+        });
+
+        $('.info-mark').on('mousemove', function (e) {
+        $('#tooltip').css({
+            top: e.pageY - 30 + 'px', // 上方 30px
+            left: e.pageX + 'px'
+        });
+        });
+
+        $('.info-mark').on('mouseleave', function () {
+        $('#tooltip').css('opacity', 0);
+        });
+    });
+    </script>
+
+    <script>//右邊開關
+    $('#toggleBTN-right-container').on('click', function () {
+        const target = $('#pnrtool-right-container');
+        const button = $(this);
+
+        const isActive = target.hasClass('active');
+
+        target.toggleClass('active', !isActive); // 加或移除
+        button.toggleClass('active', !isActive); // 同步按鈕本身的 active
+    });
+    </script>
+
+</body>
+
+</html>

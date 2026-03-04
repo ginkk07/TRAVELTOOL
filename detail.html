@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCM Tool Kit - 首頁</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/main_dark.css">
+    <link rel="stylesheet" href="./css/bta.css">
+    <link rel="stylesheet" href="./css/loadingModal.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Roboto&amp;display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+    <header>
+        <div class="container-fluid no_padding h-100">
+            <nav class="nav_block h-100">
+                <div class="block_top">
+                    <div class="h3">FCM Tool Kit</div>
+                    <a class="icon_item icon_md icon_logout"  href="./login.html"></a>
+                </div>
+                <div class="block_content">
+                    <ul class="nav nav-tabs tab_style1" role="tablist">
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="./amex.html">BTA (TXT格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./bta.html">BTA (XLSX格式)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./urgentnotify.html">緊急通知 BTA 交易</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./cta.html">CTA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="./billingstatement.html">請款</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerfoot">
+                    <button id="theme-toggle" class="mb-3"><i class="bi bi-brightness-high-fill"></i></button>
+                    <a href="./rmtool.html"><span>RM Tools</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--電燈開關-->
+    <script>
+    (function() {
+        const toggleBtn   = document.getElementById('theme-toggle');
+        const rootEl      = document.documentElement;
+        const storageKey  = 'theme-preference';
+
+        // 1. 初始化：读取 localStorage 或默认 data-theme
+        const currentTheme = localStorage.getItem(storageKey)
+                                || rootEl.getAttribute('data-theme')
+                                || 'light';
+        rootEl.setAttribute('data-theme', currentTheme);
+
+        // 2. 点击切换：只切换 data-theme 并写回 localStorage
+        toggleBtn.addEventListener('click', () => {
+            const newTheme = rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            rootEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem(storageKey, newTheme);
+        });
+    })();
+    </script>
+<div class="content">
+    <form id="btaItemForm" method="post" action="/AMEX/Add">
+        <div class="container-fluid no_padding">
+            <div class="info_block right_area_block">
+                <div class="blcok_content p-4 mb-3">
+                    <div class="row mb-3 justify-content-between align-items-center">
+                        <div class="col-auto">
+                            <h2>基本資料</h2>
+                        </div>
+                        <div class="col-auto">
+                            <div class="btn btn-primary" onclick="add()">加入</div>
+                            <div class="btn btn-secondary" onclick="back()">返回</div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-md-6 col-12">
+                            <div class="fill_item">
+                                <label class="item_title">客戶</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="客戶" class="form-control text-center" readonly="" value="台灣阿迪達斯股份有限公司 (FCADI00)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="fill_item">
+                                <label class="item_title">卡號</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="卡號" class="form-control text-center" readonly="" value="376359980291005">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-3">
+                        <div class="col-6 col-md-4 mb-3">
+                            <div class="fill_item">
+                                <label class="item_title">Invoice Number</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="Invoice Number" class="form-control text-center" readonly="" value="T38660816">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <div class="fill_item">
+                                <label class="item_title">Invoice Date</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="Invoice Date" class="form-control text-center" readonly="" value="2025/05/28">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <div class="fill_item">
+                                <label class="item_title">訂單編號</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="訂單編號" class="form-control text-center" readonly="" value="00234108">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <div class="fill_item">
+                                <label class="item_title">帳單日期</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="帳單日期" class="form-control text-center" readonly="" value="2025/05/28">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 mb-3">
+                            <div class="fill_item">
+                                <label class="item_title" for="AORDNo">帳單編號</label>
+                                <div class="item_content">
+                                    <input type="text" placeholder="帳單編號" class="form-control text-center" readonly="" id="AORDNo" name="AORDNo" value="A0230293">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---機票項目--->
+                <div class="blcok_content p-4 mb-3">
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <h2>機票項目</h2>
+                        </div>
+                    </div>
+                    <div class="list_table table-responsive-md w-100" style="overflow: auto;">
+                        <table class="table align-middle table-success table-bordered green_table">
+                            <thead>
+                                <tr class="text-center align-middle">
+                                    <th>旅客</th>
+                                    <th>票號</th>
+                                    <th>費用</th>
+                                    <th>Customer Reference</th>
+                                    <th>Trip Requisition</th>
+                                    <th>Job Number</th>
+                                    <th>Comment 3</th>
+                                    <th>PNR</th>
+                                    <th>D/I</th>
+                                    <th>航班號碼</th>
+                                    <th>出發日期</th>
+                                    <th>航段</th>
+                                    <th>艙等</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center align-middle">
+                                    <td rowspan="2">WONG/SEE WEI MS</td>
+                                    <td rowspan="2">1602875488344</td>
+                                    <td rowspan="2">TWD 8443</td>
+                                    <td rowspan="2">00853182</td>
+                                    <td rowspan="2">0007704604</td>
+                                    <td rowspan="2">7700</td>
+                                    <td rowspan="2">7700</td>
+                                    <td rowspan="2">DBLO2G</td>
+                                    <td rowspan="2">I</td>
+                                    <td>CX 0421</td>
+                                    <td>2025/06/02</td>
+                                    <td>TPE/HKG</td>
+                                    <td>Q</td>
+                                </tr>
+                                <tr class="text-center align-middle">
+                                    <td>CX 0464</td>
+                                    <td>2025/06/07</td>
+                                    <td>HKG/TPE</td>
+                                    <td>N</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!---非機票項目--->
+                <div class="blcok_content p-4 mb-3">
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <h2>非機票項目</h2>
+                        </div>
+                    </div>
+                    <div class="list_table table-responsive-md">
+                        <table class="table align-middle table-success table-bordered green_table">
+                            <thead>
+                                <tr class="text-center align-middle">
+                                    <th>項目名稱</th>
+                                    <th>旅客</th>
+                                    <th>費用</th>
+                                    <th>Customer Reference</th>
+                                    <th>Trip Requisition</th>
+                                    <th>Job Number</th>
+                                    <th>Comment 3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>項目</td>
+                                    <td>My name</td>
+                                    <td>$199,000</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8BdsNEBJDEhEsGF1T06UsdZbqlV4-TuPv7CW1ZIrSnJLsHKkyGPwVpbGyE99XzQb5unDR2bLEVe1aZZqZlCHvvlLfK-uF1MvQ4Nh5o83ZtFegQDHH6XOhcHCoO0_PssrBbBxfpxrRgswGkJxsVqfqL8"></form>
+</div>
+
+
+    <div class="modal alert_modal fade" id="AlertModal" alert-type="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="semi-bold message_content"></h4>
+                    <h5 class="semi-bold message_sub_content"></h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_ok" data-dismiss="modal">確定</button>
+                    <button type="button" class="btn btn_cxl" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn_other" data-dismiss="modal">其他</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade loading_modal" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="loading_group">
+                        <span class="circle circle-1"></span>
+                        <span class="circle circle-2"></span>
+                        <span class="circle circle-3"></span>
+                        <span class="circle circle-4"></span>
+                        <span class="circle circle-5"></span>
+                        <span class="circle circle-6"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./jquery/jquery.min.js?v=zp0HUArZHsK1JMJwdk7EyaM-eDINjTdOxADt5Ij2JRs"></script>
+    <script src="./bootstrap/js/bootstrap.bundle.min.js?v=6zfk2L8R3wCgRbZzpkEi7UYC2bc6fYGIgFfNeqyOWnQ"></script>
+    <script>
+        $(document).ready(function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerElement) {
+                return new bootstrap.Tooltip(tooltipTriggerElement);
+            });
+        });
+    </script>
+    <script src="./jqueryui/jquery-ui.js" asp-append-version="true"></script>
+    <script src="./vue/vue.global.prod.min.js" asp-append-version="true"></script>
+    <script src="./axios/axios.js" asp-append-version="true"></script>
+</body>
+</html>
