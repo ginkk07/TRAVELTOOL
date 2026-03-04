@@ -274,7 +274,7 @@ header {
             }
 
                 .nav-tabs.tab_style1 + .tab-content .nav .nav-item .nav-link {
-                    color: #aaaaaa;
+                    color: #5177ad;
                     font-weight: bold;
                     width: 100%;
                     font-size: 16px;
@@ -1524,4 +1524,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="date"]::-moz-focus-inner {
   border: 0;
+
 }
