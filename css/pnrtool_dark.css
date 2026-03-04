@@ -474,7 +474,7 @@
     -moz-user-select: none;
     user-select: none;
     background-color: transparent;
-    border: 1px solid #00a533;
+    border: 1px solid #00b773;
     padding: 12px 8px;
     font-size: 14px;
     font-weight: bold;
@@ -483,13 +483,13 @@
 
   }
   .btn-check:hover+.radio-GREENstyle{
-      background-color: #d4ffdb;
+      background-color: #16ff002b;
   }
 
 
   .btn-check:checked+.radio-GREENstyle{
     color: #fff;
-    background-color: #00a533;
+    background-color: #00b773;
   }
 
   .table-Nstyle{
