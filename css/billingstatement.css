@@ -1,0 +1,162 @@
+﻿
+.blcok_content *::-webkit-scrollbar {
+    background-color: #dedede;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 2rem;
+}
+
+
+.billingstatement_list_table {
+    position: relative;
+}
+
+    .billingstatement_list_table table .list_table {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        height: calc(100vh - 136px);
+    }
+
+    .billingstatement_list_table .list_table .table_body {
+        width: 100%;
+        overflow-y: auto;
+        flex: 1;
+        padding-bottom: 5px;
+    }
+
+.product_list .list_table .table_body tr:hover {
+    background-color: #fcfcfc;
+}
+
+
+.billingstatement_list_table table {
+    border: 1px solid #ffffff;
+    border-collapse: separate;
+    border-spacing: 0;
+    display: block;
+    white-space: nowrap;
+    width: fit-content;
+    height: fit-content;
+}
+
+.billingstatement_list_table th {
+    background-color: #13a776;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 0 8px;
+    white-space: nowrap;
+    height: 50px;
+    font-weight: bold;
+    text-align: center;
+    &:last-child{
+        border-right: none;
+    }
+}
+
+.billingstatement_list_table tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+
+.billingstatement_list_table tbody tr:hover{
+    outline: 3px solid #49b7989d;
+}
+
+
+.billingstatement_list_table td {
+    /*background-color: #ffffff;*/
+    border-right: 1px solid #c9c9c9;
+    padding: 1rem 0.5rem;
+
+    &:last-child{
+        border-right: none;
+    }
+}
+
+.billingstatement_list_table tr {
+    border: 1px solid #6b675d;
+}
+
+.billingstatement_list_table th:first-child, /*啟程日期*/
+.billingstatement_list_table td:first-child,
+.billingstatement_list_table th:nth-child(3), /*收款日期*/
+.billingstatement_list_table td:nth-child(3),
+.billingstatement_list_table th:nth-child(4), /*開票日期*/
+.billingstatement_list_table td:nth-child(4),
+.billingstatement_list_table th:nth-child(5), /*帳單日期*/
+.billingstatement_list_table td:nth-child(5), /*帳單日期*/
+.billingstatement_list_table th:nth-child(7),
+.billingstatement_list_table td:nth-child(7), /*代轉日期*/
+.billingstatement_list_table th:nth-child(10), /*訂單日期*/
+.billingstatement_list_table td:nth-child(10), /*訂單日期*/
+.billingstatement_list_table th:nth-child(11), /*訂單編號*/
+.billingstatement_list_table td:nth-child(11), /*訂單編號*/
+.billingstatement_list_table th:nth-child(15), /*銷售部門*/
+.billingstatement_list_table td:nth-child(15), /*銷售部門*/
+.billingstatement_list_table th:nth-child(16), /*業務人員*/
+.billingstatement_list_table td:nth-child(16), /*業務人員*/
+.billingstatement_list_table th:nth-child(17), /*出發城市*/
+.billingstatement_list_table td:nth-child(17), /*出發城市*/
+.billingstatement_list_table th:nth-child(18), /*抵達城市*/
+.billingstatement_list_table td:nth-child(18), /*抵達城市*/
+.billingstatement_list_table th:nth-child(20), /*票號*/
+.billingstatement_list_table td:nth-child(20), /*票號*/
+.billingstatement_list_table th:nth-child(21), /*回程日期*/
+.billingstatement_list_table td:nth-child(21), /*回程日期*/
+.billingstatement_list_table th:nth-child(22), /*開票人*/
+.billingstatement_list_table td:nth-child(22) /*開票人*/ {
+    text-align: center;
+    vertical-align: middle;
+    width: 110px
+}
+
+.billingstatement_list_table th:nth-child(2), /*收款單號*/
+.billingstatement_list_table td:nth-child(2),
+.billingstatement_list_table th:nth-child(6), /*帳單編號*/
+.billingstatement_list_table td:nth-child(6),
+.billingstatement_list_table th:nth-child(11), /*訂單編號*/
+.billingstatement_list_table td:nth-child(11) {
+    text-align: center;
+    vertical-align: middle;
+    width: 90px;
+}
+
+.billingstatement_list_table th:nth-child(12) /*旅客中英文姓名*/ {
+    text-align: center;
+    vertical-align: middle;
+    width: auto;
+}
+
+.billingstatement_list_table td:nth-child(12) /*旅客中英文姓名*/ {
+    text-align: left;
+    vertical-align: middle;
+    width: auto;
+}
+
+
+.billingstatement_list_table th:nth-child(13) /*旅客 EMAIL*/ {
+    text-align: center;
+    vertical-align: middle;
+    width: auto;
+}
+
+.billingstatement_list_table td:nth-child(13) /*旅客 EMAIL*/ {
+    text-align: left;
+    vertical-align: middle;
+    width: auto;
+}
+
+
+
+.billingstatement_list_table th:nth-child(18) /*航程*/ {
+    text-align: center;
+    vertical-align: middle;
+    width: 130px;
+}
+
+.billingstatement_list_table td:nth-child(18) /*航程*/ {
+    text-align: left;
+    vertical-align: middle;
+    width: 130px;
+}

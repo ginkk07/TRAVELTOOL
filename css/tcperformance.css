@@ -1,0 +1,66 @@
+﻿
+.blcok_content *::-webkit-scrollbar {
+    width: 1em;
+    height: 1em;
+    background-color: skyblue;
+}
+
+
+.tcperformance_list_table {
+    position: relative;
+    overflow: scroll;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    height: calc(100vh - 136px);
+}
+
+    .tcperformance_list_table table {
+        border-collapse: separate;
+        width: 100%;
+        border-spacing: 0;
+        border: 1px solid #6b675d;
+    }
+
+    .tcperformance_order_list_table th {
+        background-color: #009879;
+        color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 0 8px;
+        white-space: nowrap;
+        height: 50px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .tcperformance_list_table tr:nth-of-type(even) td {
+        background-color: #f3f3f3;
+    }
+
+    .tcperformance_list_table td {
+        background-color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 1rem 0.5rem;
+    }
+
+    .tcperformance_list_table tr {
+        border: 1px solid #6b675d;
+    }
+
+.tcperformance_list_table td:first-child,  /*PNR*/
+.tcperformance_list_table td:nth-child(2), /*SO*/
+.tcperformance_list_table td:nth-child(4), /*建立日期*/
+.tcperformance_list_table td:nth-child(5), /*開票日*/
+.tcperformance_list_table td:nth-child(7)  /*收款日*/ {
+    text-align: center;
+}
+
+.tcperformance_list_table td:nth-child(3), /*建立訂單業務*/
+.tcperformance_list_table td:nth-child(9), /*旅客名*/
+.tcperformance_list_table td:nth-child(10) /*公司*/ {
+    text-align: left;
+}
+
+.tcperformance_list_table td:nth-child(6), /*建立日~開票日*/
+.tcperformance_list_table td:nth-child(8) /*開票日~開立帳單日*/ {
+    text-align: right;
+}

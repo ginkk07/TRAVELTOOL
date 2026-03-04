@@ -1,0 +1,58 @@
+﻿
+.blcok_content *::-webkit-scrollbar {
+    width: 1em;
+    height: 1em;
+    background-color: skyblue;
+}
+
+
+.urgent_notify_list_table {
+    position: relative;
+    overflow: scroll;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    height: calc(100vh - 136px);
+}
+
+    .urgent_notify_list_table table {
+        border-collapse: separate;
+        width: 100%;
+        border-spacing: 0;
+        border: 1px solid #6b675d;
+    }
+
+    .urgent_notify_list_table th {
+        background-color: #009879;
+        color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 0 8px;
+        white-space: nowrap;
+        height: 50px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .urgent_notify_list_table tr:nth-of-type(even) td {
+        background-color: #f3f3f3;
+    }
+
+    .urgent_notify_list_table td {
+        background-color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 1rem 0.5rem;
+    }
+
+    .urgent_notify_list_table tr {
+        border: 1px solid #6b675d;
+    }
+
+    .urgent_notify_list_table td:first-child, /*帳單編號*/
+    .urgent_notify_list_table td:nth-child(3), /*交易類型*/
+    .urgent_notify_list_table td:nth-child(2), /*機票號碼*/ {
+        text-align: center;
+    }
+
+    .urgent_notify_list_table th:last-child,
+    .urgent_notify_list_table td:last-child {
+        width: 20px;
+    }

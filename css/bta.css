@@ -1,0 +1,146 @@
+﻿
+.blcok_content *::-webkit-scrollbar {
+    background-color: #dedede;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 2rem;
+}
+
+
+.bta_list_table {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-right: 0;
+}
+
+    .bta_list_table table {
+        border-collapse: separate;
+        width: 100%;
+        border-spacing: 0;
+        border: 1px solid #ffffff;
+        /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);*/
+    }
+
+    .bta_list_table th {
+        background-color: #13a776;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+        padding: 0 8px;
+        white-space: nowrap;
+        height: 50px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .bta_list_table tr{
+        transition: 0.2s;
+        outline: 3px solid transparent;
+        position: relative;
+        z-index: 1;
+    }
+
+    .bta_list_table tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .bta_list_table tr:hover:nth-child(n+2) {
+        border-radius: 5px;
+        outline: 3px solid #49b7989d;
+        z-index: 2;
+    }
+
+    .bta_list_table td {
+        border: 1px solid #fff;
+        padding: 0.75rem 1.25rem;
+        text-align: center;
+    }
+
+    .bta_list_table tr {
+        border: none;
+    }
+
+    .bta_list_table th:last-child,
+    .bta_list_table td:last-child {
+        width: 20px;
+    }
+
+    .bta_list_table .material-symbols-outlined{
+        font-size: 19px;
+    }
+
+    
+
+/*--------------Cta------------------*/
+
+.cta_list_table {
+    position: relative;
+    overflow: scroll;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    height: calc(100vh - 136px);
+}
+
+    .cta_list_table table {
+        border-collapse: separate;
+        width: 600px;
+        border-spacing: 0;
+        border: 1px solid #6b675d;
+    }
+
+    .cta_list_table th {
+        background-color: #009879;
+        color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 0 8px;
+        white-space: nowrap;
+        height: 50px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .cta_list_table tr:nth-of-type(even) td {
+        background-color: #f3f3f3;
+    }
+
+    .cta_list_table td {
+        background-color: #ffffff;
+        border: 1px solid #6b675d;
+        padding: 1rem 0.5rem;
+    }
+
+    .cta_list_table tr {
+        border: 1px solid #6b675d;
+    }
+
+    .cta_list_table td:first-child /*帳單編號*/ {
+        text-align: center;
+        width: 100px;
+    }
+    .cta_list_table td:nth-child(2) /*帳單總額*/ {
+        text-align: right;
+        width: 100px;
+    }
+    .cta_list_table td:nth-child(3) /*過卡 TC*/ {
+        text-align: center;
+        width: 100px;
+    }
+    .cta_list_table td:nth-child(4) /*卡    號*/ {
+        text-align: right;
+        width: 150px;
+    }
+    .cta_list_table td:nth-child(5) /*效    期*/ {
+        text-align: center;
+        width: 100px;
+    }
+    .cta_list_table th:last-child,
+    .cta_list_table td:last-child {
+        width: 20px;
+    }
+
+
+/*--------------dta------------------*/
+{
+
+}

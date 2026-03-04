@@ -1,0 +1,62 @@
+﻿
+.blcok_content *::-webkit-scrollbar {
+    width: 1em;
+    height: 1em;
+    background-color: skyblue;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+.h2 {
+    font-size: 2.14rem;
+    font-weight: bold;
+}
+
+.check_result {
+    padding: 0rem;
+    margin:  0rem
+}
+    .check_result:before {
+        content: "";
+        display: inline-block;
+        background-size: contain;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+    }
+    .check_result.icon_item {
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+    }
+        .check_result.icon_item.icon_can_add:before {
+            background-image: url("../icons/icon_add.svg");
+        }
+        .check_result.icon_item.icon_checked:before {
+            background-image: url("../icons/icon_editor_ok.svg");
+        }
+
+        .check_result.icon_item.icon_cross:before {
+            background-image: url("../icons/icon_editor_failed.svg");
+        }
+
+
+    #PNRContent .btn.btn_info {
+        padding: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 30px;
+        text-align: center;
+        padding-left: 1px;
+        line-height: 15px;
+        font-size: 1rem;
+        font-weight: normal;
+    }
+
+        #PNRContent .btn.btn_info:before {
+            content: "i";
+        }
